@@ -1,0 +1,16 @@
+[
+  {
+    "name": "apiKey",
+    "type": "text",
+    "label": "API Key",
+    "required": true,
+    "help": "Your LoopQuest workspace API key (Workspaces -> API keys)."
+  },
+  {
+    "name": "baseUrl",
+    "type": "url",
+    "label": "Base URL",
+    "required": false,
+    "default": "https://loopquest.tomphillips.uk"
+  }
+]

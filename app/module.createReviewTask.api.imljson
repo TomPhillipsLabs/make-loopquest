@@ -1,0 +1,16 @@
+{
+  "url": "/api/v1/tasks",
+  "method": "POST",
+  "body": {
+    "module": "{{parameters.module}}",
+    "payload": { "content": "{{parameters.content}}" },
+    "card": { "title": "{{parameters.title}}", "body": "{{parameters.content}}" },
+    "source": "{{parameters.source}}",
+    "external_id": "{{parameters.external_id}}",
+    "callback_url": "{{parameters.callback_url}}",
+    "reviews_required": "{{parameters.reviews_required}}"
+  },
+  "response": {
+    "output": "{{body}}"
+  }
+}

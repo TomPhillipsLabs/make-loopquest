@@ -1,0 +1,20 @@
+[
+  { "name": "content", "type": "text", "label": "Content", "required": true, "help": "The output a human should review." },
+  { "name": "title", "type": "text", "label": "Title" },
+  {
+    "name": "module",
+    "type": "select",
+    "label": "Module",
+    "default": "swiper",
+    "options": [
+      { "label": "Swiper", "value": "swiper" },
+      { "label": "Detective", "value": "detective" },
+      { "label": "Decoy", "value": "decoy" },
+      { "label": "Arena", "value": "arena" }
+    ]
+  },
+  { "name": "source", "type": "text", "label": "Source", "default": "make" },
+  { "name": "external_id", "type": "text", "label": "External ID", "help": "Echoed back in the verdict webhook for correlation." },
+  { "name": "callback_url", "type": "url", "label": "Callback URL", "help": "Where LoopQuest sends the signed verdict (e.g. a Make instant webhook URL)." },
+  { "name": "reviews_required", "type": "number", "label": "Reviewers Required" }
+]

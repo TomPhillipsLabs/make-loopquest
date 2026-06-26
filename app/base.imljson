@@ -1,0 +1,11 @@
+{
+  "baseUrl": "{{if(connection.baseUrl, connection.baseUrl, 'https://loopquest.tomphillips.uk')}}",
+  "headers": {
+    "authorization": "Bearer {{connection.apiKey}}"
+  },
+  "response": {
+    "error": {
+      "message": "[{{statusCode}}] {{body.error}}"
+    }
+  }
+}
