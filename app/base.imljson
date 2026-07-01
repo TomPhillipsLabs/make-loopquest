@@ -4,9 +4,7 @@
     "authorization": "Bearer {{connection.apiKey}}"
   },
   "response": {
-    "error": {
-      "message": "[{{statusCode}}] {{body.error}}"
-    }
+    "error": "[{{statusCode}}] {{body.error}}"
   },
   "log": {
     "sanitize": ["request.headers.authorization"]
