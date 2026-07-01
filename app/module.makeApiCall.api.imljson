@@ -1,7 +1,9 @@
 {
   "url": "{{parameters.url}}",
   "method": "{{parameters.method}}",
-  "headers": "{{parameters.headers}}",
+  "headers": {
+    "authorization": "Bearer {{connection.apiKey}}"
+  },
   "qs": "{{parameters.qs}}",
   "body": "{{parameters.body}}",
   "response": {

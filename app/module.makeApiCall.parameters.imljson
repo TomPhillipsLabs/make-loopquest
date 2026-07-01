@@ -1,5 +1,5 @@
 [
-  { "name": "url", "type": "text", "label": "URL", "required": true, "help": "Relative to https://loopquest.tomphillips.uk, e.g. /api/v1/tasks" },
+  { "name": "url", "type": "text", "label": "URL", "required": true, "help": "A path relative to the connection base (which already includes /api/v1), e.g. /me or /tasks. Authorization is added automatically." },
   {
     "name": "method",
     "type": "select",
@@ -12,16 +12,6 @@
       { "label": "PUT", "value": "PUT" },
       { "label": "PATCH", "value": "PATCH" },
       { "label": "DELETE", "value": "DELETE" }
-    ]
-  },
-  {
-    "name": "headers",
-    "type": "array",
-    "label": "Headers",
-    "help": "Authorization is added automatically from the connection.",
-    "spec": [
-      { "name": "key", "type": "text", "label": "Key" },
-      { "name": "value", "type": "text", "label": "Value" }
     ]
   },
   {
