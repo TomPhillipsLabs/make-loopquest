@@ -1,0 +1,10 @@
+[
+  { "name": "id", "type": "text", "label": "Task ID" },
+  { "name": "status", "type": "text", "label": "Status" },
+  { "name": "verdict", "type": "boolean", "label": "Verdict (approved)" },
+  { "name": "choice", "type": "text", "label": "Choice" },
+  { "name": "reason", "type": "text", "label": "Reason" },
+  { "name": "escalated", "type": "boolean", "label": "Escalated" },
+  { "name": "timed_out", "type": "boolean", "label": "Timed out" },
+  { "name": "reviewed_at", "type": "date", "label": "Reviewed at" }
+]

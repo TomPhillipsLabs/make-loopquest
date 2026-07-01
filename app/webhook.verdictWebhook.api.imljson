@@ -1,0 +1,6 @@
+{
+  "respond": {
+    "status": 200
+  },
+  "output": "{{body}}"
+}

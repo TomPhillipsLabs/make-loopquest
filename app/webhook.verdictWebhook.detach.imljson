@@ -1,0 +1,7 @@
+{
+  "url": "/api/v1/hooks/{{webhook.hookId}}",
+  "method": "DELETE",
+  "headers": {
+    "authorization": "Bearer {{connection.apiKey}}"
+  }
+}

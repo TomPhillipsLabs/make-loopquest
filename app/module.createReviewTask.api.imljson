@@ -3,11 +3,19 @@
   "method": "POST",
   "body": {
     "module": "{{parameters.module}}",
-    "payload": { "content": "{{parameters.content}}" },
+    "mode": "{{parameters.mode}}",
+    "payload": {
+      "content": "{{parameters.content}}",
+      "body": "{{parameters.content}}",
+      "claim": "{{parameters.claim}}",
+      "source": "{{parameters.sourceText}}"
+    },
     "card": { "title": "{{parameters.title}}", "body": "{{parameters.content}}" },
     "source": "{{parameters.source}}",
     "external_id": "{{parameters.external_id}}",
     "callback_url": "{{parameters.callback_url}}",
+    "timeout_seconds": "{{parameters.timeout_seconds}}",
+    "on_timeout": "{{parameters.on_timeout}}",
     "reviews_required": "{{parameters.reviews_required}}"
   },
   "response": {

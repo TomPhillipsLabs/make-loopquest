@@ -1,20 +1,54 @@
 [
-  { "name": "content", "type": "text", "label": "Content", "required": true, "help": "The output a human should review." },
-  { "name": "title", "type": "text", "label": "Title" },
+  { "name": "content", "type": "text", "label": "Content", "required": true, "help": "The AI/automation output a human should review." },
+  { "name": "title", "type": "text", "label": "Title", "help": "Optional heading shown on the review card." },
   {
     "name": "module",
     "type": "select",
-    "label": "Module",
+    "label": "Game",
     "default": "swiper",
+    "help": "How the reviewer sees the item. Swiper = approve/reject; Grounding = check a claim against a source; Redact = mask sensitive text.",
     "options": [
-      { "label": "Swiper", "value": "swiper" },
-      { "label": "Detective", "value": "detective" },
-      { "label": "Decoy", "value": "decoy" },
-      { "label": "Arena", "value": "arena" }
+      { "label": "Swiper — approve or reject", "value": "swiper" },
+      { "label": "Versus — pick the better of two", "value": "versus" },
+      { "label": "Sorter — bucket into categories", "value": "sorter" },
+      { "label": "Detective — spot the problem", "value": "detective" },
+      { "label": "Fixer — correct the output", "value": "fixer" },
+      { "label": "Redact — mask sensitive text", "value": "redact" },
+      { "label": "Grounding — verify a claim against a source", "value": "grounding" }
     ]
   },
-  { "name": "source", "type": "text", "label": "Source", "default": "make" },
-  { "name": "external_id", "type": "text", "label": "External ID", "help": "Echoed back in the verdict webhook for correlation." },
-  { "name": "callback_url", "type": "url", "label": "Callback URL", "help": "Where LoopQuest sends the signed verdict (e.g. a Make instant webhook URL)." },
-  { "name": "reviews_required", "type": "number", "label": "Reviewers Required" }
+  {
+    "name": "mode",
+    "type": "select",
+    "label": "Mode",
+    "default": "monitor",
+    "help": "Gate blocks a downstream action until a human approves (pair with Watch Verdicts). Monitor reviews in the background without pausing anything.",
+    "options": [
+      { "label": "Monitor — review in the background", "value": "monitor" },
+      { "label": "Gate — block until a human approves", "value": "gate" }
+    ]
+  },
+  { "name": "claim", "type": "text", "label": "Claim", "help": "Grounding only: the statement to verify." },
+  { "name": "sourceText", "type": "text", "label": "Source text", "help": "Grounding only: the reference text the claim is checked against." },
+  {
+    "name": "timeout_seconds",
+    "type": "number",
+    "label": "Timeout (seconds)",
+    "help": "Gate only: if no one reviews within this window the fallback below is applied. 30–2592000 (30 days)."
+  },
+  {
+    "name": "on_timeout",
+    "type": "select",
+    "label": "On timeout",
+    "help": "Gate only: what to do if the timeout is hit. Defaults to escalate (fail-closed).",
+    "options": [
+      { "label": "Escalate — flag for a human, don't auto-decide", "value": "escalate" },
+      { "label": "Reject — treat as a flag", "value": "reject" },
+      { "label": "Approve — treat as approved", "value": "approve" }
+    ]
+  },
+  { "name": "source", "type": "text", "label": "Source", "default": "make", "help": "A label for where this came from, shown to reviewers." },
+  { "name": "external_id", "type": "text", "label": "External ID", "help": "Your own id for the item — echoed back in the verdict so you can correlate it." },
+  { "name": "callback_url", "type": "url", "label": "Callback URL", "help": "Optional. A single webhook to POST this task's verdict to. Leave blank if you use the Watch Verdicts trigger instead." },
+  { "name": "reviews_required", "type": "number", "label": "Reviewers required", "help": "How many people must review before the verdict resolves. Defaults to 1." }
 ]

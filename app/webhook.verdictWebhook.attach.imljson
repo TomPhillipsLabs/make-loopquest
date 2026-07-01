@@ -1,0 +1,15 @@
+{
+  "url": "/api/v1/hooks",
+  "method": "POST",
+  "headers": {
+    "authorization": "Bearer {{connection.apiKey}}"
+  },
+  "body": {
+    "url": "{{webhook.url}}"
+  },
+  "response": {
+    "data": {
+      "hookId": "{{body.id}}"
+    }
+  }
+}
