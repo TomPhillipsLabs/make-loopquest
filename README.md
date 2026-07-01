@@ -50,19 +50,6 @@ Notes:
 - `attach`/`detach` go in the webhook's own **Attach** and **Detach** editors, **not** in Communication (Make rejects them there). Attach registers the Make webhook URL with LoopQuest (`POST /api/v1/hooks`) when a scenario is switched on; detach removes it (`DELETE /api/v1/hooks/{id}`) when it's switched off. Subscription is idempotent by URL, so no duplicates.
 - If you use a **shared** webhook instead, there are no Attach/Detach steps — register its URL once with `POST /api/v1/hooks` (Bearer API key, body `{ "url": "<webhook url>" }`).
 
-## Publishing to Make
-
-To list this publicly you request an **app review** in the Make Developer Platform. Checklist:
-
-- [ ] App **name** `loopquest`, **label** `LoopQuest`, theme `#6b3aa3`, language English, audience Global.
-- [ ] Logo uploaded (512×512 PNG).
-- [ ] Connection tested end-to-end; the `Authorization` header is sanitized from logs (`base.imljson` → `log.sanitize`). Make stores connection values encrypted.
-- [ ] All three modules run against a live workspace; labels and help text on every mappable parameter.
-- [ ] Watch Verdicts subscribes/unsubscribes cleanly (turn a scenario on and off, confirm the subscription appears/disappears via `GET /api/v1/hooks`).
-- [ ] This README linked as the app's documentation; support email set.
-- [ ] Privacy policy + terms URLs: `https://loopquest.tomphillips.uk/privacy` · `https://loopquest.tomphillips.uk/terms`.
-- [ ] Submit for review from **My apps → LoopQuest → Publish / Request review**.
-
 Make can't lint an app offline — validate every module in the editor before requesting review. The IML in `app/` is the source of truth, not a pre-verified package.
 
 ## Links
