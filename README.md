@@ -9,6 +9,7 @@ A [Make](https://www.make.com) custom app for [LoopQuest](https://loopquest.tomp
 | **Create a Review Task** | Action | Sends your output to a human. Pick the game and the mode (gate or monitor), set an optional timeout and fallback. Returns the task `id`. |
 | **Watch Verdicts** | Instant trigger | Fires the moment any review resolves — gives you the verdict, choice, reason, flags (`escalated`, `timed_out`) and your `external_id`. This is how you build a blocking gate in Make. |
 | **Get Task Status** | Action | Looks up a single review on demand (verdict, reviewer, timing). Useful for a polling loop or a manual check. |
+| **Make an API Call** | Universal | Call any LoopQuest endpoint that doesn't have a dedicated module yet. Auth is added for you. |
 
 ### Games (how the reviewer sees the item)
 
@@ -44,11 +45,37 @@ Make apps are configured in the online [Apps editor](https://www.make.com/en/hel
 | `app/webhook.verdictWebhook.attach.imljson` | **Webhook** *verdictWebhook* → **Attach** |
 | `app/webhook.verdictWebhook.detach.imljson` | **Webhook** *verdictWebhook* → **Detach** |
 | `app/module.watchVerdicts.interface.imljson` | **Module** *watchVerdicts* (Instant trigger, bound to `verdictWebhook`) → Interface |
+| `app/module.makeApiCall.*.imljson` | **Module** *makeApiCall* (Universal) → Communication / Mappable parameters / Interface |
 
 Notes:
 - Module and webhook **names** must be alphanumeric identifiers (`createReviewTask`), no spaces — the display **Label** ("Create a Review Task") is separate.
 - `attach`/`detach` go in the webhook's own **Attach** and **Detach** editors, **not** in Communication (Make rejects them there). Attach registers the Make webhook URL with LoopQuest (`POST /api/v1/hooks`) when a scenario is switched on; detach removes it (`DELETE /api/v1/hooks/{id}`) when it's switched off. Subscription is idempotent by URL, so no duplicates.
 - If you use a **shared** webhook instead, there are no Attach/Detach steps — register its URL once with `POST /api/v1/hooks` (Bearer API key, body `{ "url": "<webhook url>" }`).
+
+## Publishing to Make
+
+To list this publicly you request an **app review** in the Make Developer Platform. Checklist:
+
+- [ ] App **name** `loopquest`, **label** `LoopQuest`, theme `#6b3aa3`, language English, audience Global.
+- [ ] Logo uploaded (512×512 PNG).
+- [ ] Connection tested end-to-end; the `Authorization` header is sanitized from logs (`base.imljson` → `log.sanitize`). Make stores connection values encrypted.
+- [ ] All three modules run against a live workspace; labels and help text on every mappable parameter.
+- [ ] Watch Verdicts subscribes/unsubscribes cleanly (turn a scenario on and off, confirm the subscription appears/disappears via `GET /api/v1/hooks`).
+- [ ] This README linked as the app's documentation; support email set.
+- [ ] Privacy policy + terms URLs: `https://loopquest.tomphillips.uk/privacy` · `https://loopquest.tomphillips.uk/terms`.
+- [ ] **Universal module** ("Make an API Call") present — required by Make review.
+- [ ] API documentation link: `https://loopquest.tomphillips.uk/docs`.
+- [ ] Test scenario links ready for each module + one that triggers a handled API error (see below).
+- [ ] Submit for review from **My apps → LoopQuest → Publish / Request review**.
+
+### Review submission — what to paste
+
+- **API documentation link:** `https://loopquest.tomphillips.uk/docs`
+- **Test scenarios** (build each in Make, run once, paste the `.../scenarios/<id>/edit` URL):
+  - *Create a Review Task* — the module with a mapped Content, run successfully.
+  - *Get Task Status* — feed it the id from the create module.
+  - *Watch Verdicts* — the instant trigger, switched on, having received one verdict.
+  - *Scenario with an API Error* — Create a Review Task with **Game** left invalid or the connection key blanked, so LoopQuest returns `422/401` and Make shows the mapped `[status] error` message. Proves error handling.
 
 Make can't lint an app offline — validate every module in the editor before requesting review. The IML in `app/` is the source of truth, not a pre-verified package.
 
